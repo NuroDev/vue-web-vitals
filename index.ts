@@ -11,7 +11,7 @@ export const Vercel = (options: VercelOptions = {}): Plugin => {
 	} = options;
 
 	return {
-		name: 'vite-plugin-splitbee',
+		name: 'vite-plugin-vercel',
 		configResolved(config) {
 			console.log(`Vercel Debug: `, debug);
 			console.log(`Config: `, config);
