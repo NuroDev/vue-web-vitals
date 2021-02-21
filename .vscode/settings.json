@@ -1,0 +1,13 @@
+{
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"eslint.validate": [
+		"html",
+		"javascriptreact",
+		"typescriptreact"
+	],
+	"editor.tabSize": 4,
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	}
+}
