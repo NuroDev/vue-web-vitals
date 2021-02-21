@@ -22,7 +22,7 @@ import Vercel from 'vite-plugin-vercel';
 export default defineConfig({
     plugins: [
         Vercel(),
-    ]
+    ],
 });
 ```
 
