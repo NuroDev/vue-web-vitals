@@ -31,7 +31,7 @@ export default defineConfig({
 ```typescript
 export default defineConfig({
     plugins: [
-        ViteSplitbee({
+        Vercel({
             /// Prints metrics in the console (Optional) [Default: false]
             debug: false,
         }),
