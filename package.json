@@ -1,13 +1,13 @@
 {
-	"name": "vite-plugin-vercel",
+	"name": "vue-web-vitals",
 	"version": "0.1.1",
-	"description": "Track core web vitals in Vite projects via Vercel Analytics",
+	"description": "Track core web vitals in Vue 3.x projects",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/nurodev/vite-plugin-vercel.git"
+		"url": "https://github.com/nurodev/vue-web-vitals.git"
 	},
-	"homepage": "https://github.com/nurodev/vite-plugin-vercel",
-	"bugs": "https://github.com/nurodev/vite-plugin-vercel/issues",
+	"homepage": "https://github.com/nurodev/vue-web-vitals",
+	"bugs": "https://github.com/nurodev/vue-web-vitals/issues",
 	"author": {
 		"name": "nurodev",
 		"email": "me@nuro.dev",
