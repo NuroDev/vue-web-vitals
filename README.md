@@ -38,8 +38,9 @@ useVitals({
 
 ## ⚠️ Requirements
 
-Currently this plugin only supports Vue 3.x and vue-router 4.x
+Currently this module only supports Vue 3.x and vue-router 4.x.
 
+This module was originally built to support [Vercel Analytics](https://vercel.com/analytics). Work has been done to make it provider agnostic but has yet to be tested with alternative providers
 
 ## ✨ Inspiration
 
