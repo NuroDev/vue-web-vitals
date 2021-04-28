@@ -44,4 +44,4 @@ This module was originally built to support [Vercel Analytics](https://vercel.co
 
 ## ✨ Inspiration
 
-[vercel/nuxt-plugin-vercel](https://github.com/vercel/nuxt-plugin-vercel)
+[isabella232/nuxt-plugin-vercel](https://github.com/isabella232/nuxt-plugin-vercel)
