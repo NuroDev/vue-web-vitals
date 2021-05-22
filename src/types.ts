@@ -1,10 +1,7 @@
 import type { Router, RouteLocationNormalized } from "vue-router";
 import type { Metric } from "web-vitals";
 
-export enum Provider {
-  LOG = "log",
-  VERCEL = "vercel",
-}
+export type Provider = "log" | "vercel";
 
 export interface IOptions {
   debug?: boolean;

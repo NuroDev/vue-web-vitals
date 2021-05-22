@@ -1,6 +1,5 @@
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from "web-vitals";
 
-import { Provider } from "./types";
 import { logPrefix } from "./util";
 
 import type {
@@ -51,7 +50,7 @@ async function webVitals({
   };
 
   switch (provider) {
-    case Provider.VERCEL:
+    case "vercel":
       const { sendToAnalytics } = await import("./providers/vercel");
       sendToProvider(sendToAnalytics, context, debug);
   }
@@ -66,7 +65,7 @@ async function webVitals({
  */
 export function useVitals({
   debug = process.env.NODE_ENV === "development" || false,
-  provider = Provider.VERCEL,
+  provider = "vercel",
   router,
 }: IOptions) {
   router.isReady().then(() => {
