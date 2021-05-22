@@ -1,10 +1,8 @@
 # 📊 vue-web-vitals
 
-A small plugin to track [core web vitals](https://web.dev/vitals/) in vue projects
+A small plugin to track [core web vitals](https://web.dev/vitals/) in Vue.js projects
 
 [![License](https://img.shields.io/badge/-MIT-f56565.svg?longCache=true&style=for-the-badge)](https://github.com/nurodev/vue-web-vitals/blob/main/LICENSE)
-[![Vue 3.x](https://img.shields.io/badge/-vue%203.x-3eaf7c.svg?longCache=true&style=for-the-badge)](https://v3.vuejs.org)
-[![Vue-router 4.x](https://img.shields.io/badge/-vue%203.x-3eaf7c.svg?longCache=true&style=for-the-badge)](https://next.router.vuejs.org/)
 [![Version](https://img.shields.io/npm/v/vue-web-vitals?label=%20&style=for-the-badge)](https://www.npmjs.com/package/vue-web-vitals)
 [![Downloads](https://img.shields.io/npm/dm/vue-web-vitals?label=%20&logo=Docusign&logoColor=white&style=for-the-badge)](https://www.npmjs.com/package/vue-web-vitals)
 
@@ -13,10 +11,6 @@ A small plugin to track [core web vitals](https://web.dev/vitals/) in vue projec
 Install the dependency
 
 ```bash
-npm install --save vue-web-vitals
-
-# OR
-
 yarn add vue-web-vitals
 ```
 
@@ -39,7 +33,8 @@ router.beforeResolve((route, before, next) => {
 
 ## ⚠️ Requirements
 
-Currently this module only supports Vue 3.x and vue-router 4.x.
+This module currently has only been tested on Vue 3.x / Vue Router 4.x.
+While the module MAY work, support is not guarenteed.
 
 ## ✨ Inspiration
 
