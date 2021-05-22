@@ -2,7 +2,12 @@ import { getCLS, getFCP, getFID, getLCP, getTTFB } from "web-vitals";
 
 import type { Metric } from "web-vitals";
 
-import type { IContext, ISendOptions, IVitalsOptions } from "./types";
+import type {
+  IContext,
+  ISendOptions,
+  IOptions,
+  IWebVitalsOptions,
+} from "./types";
 
 const VITALS_URL = "https://vitals.vercel-analytics.com/v1/vitals";
 
@@ -41,10 +46,7 @@ function sendMetric({ context, debug, metric }: ISendOptions) {
       });
 }
 
-export function useVitals({
-  debug = process.env.NODE_ENV === "development" || false,
-  route,
-}: IVitalsOptions): void {
+function webVitals({ debug, route }: IWebVitalsOptions): void {
   const context: IContext = {
     fullPath: route.fullPath,
     href: location.href,
@@ -59,6 +61,23 @@ export function useVitals({
   } catch (error) {
     console.error("[Analytics]", error);
   }
+}
+
+/**
+ * Track core web vitals in Vue.js projects
+ *
+ * @param {IOptions} [options] - Plugin options
+ * @param {boolean} [options.debug=NODE_ENV === "development" || false] - Whether to log metrics in the console
+ * @param {Router} options.router - Vue router instance
+ */
+export function useVitals({
+  debug = process.env.NODE_ENV === "development" || false,
+  router,
+}: IOptions) {
+  router.isReady().then(() => {
+    router.beforeResolve((route) => webVitals({ debug, route }));
+    router.afterEach((route) => webVitals({ debug, route }));
+  });
 }
 
 export default useVitals;

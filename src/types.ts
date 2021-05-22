@@ -1,8 +1,13 @@
-import type { RouteLocationNormalized } from "vue-router";
+import type { Router, RouteLocationNormalized } from "vue-router";
 import type { Metric } from "web-vitals";
 
-export interface IVitalsOptions {
+export interface IOptions {
   debug?: boolean;
+  router: Router;
+}
+
+export interface IWebVitalsOptions {
+  debug: boolean;
   route: RouteLocationNormalized;
 }
 
