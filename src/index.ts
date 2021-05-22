@@ -50,6 +50,10 @@ async function webVitals({
   };
 
   switch (provider) {
+    default:
+    case "log":
+      const { logAnalytics } = await import("./providers/log");
+      sendToProvider(logAnalytics, context, debug);
     case "vercel":
       const { sendToAnalytics } = await import("./providers/vercel");
       sendToProvider(sendToAnalytics, context, debug);
