@@ -1,13 +1,20 @@
 import type { Router, RouteLocationNormalized } from "vue-router";
 import type { Metric } from "web-vitals";
 
+export enum Provider {
+  LOG = "log",
+  VERCEL = "vercel",
+}
+
 export interface IOptions {
   debug?: boolean;
+  provider?: Provider;
   router: Router;
 }
 
 export interface IWebVitalsOptions {
   debug: boolean;
+  provider: Provider;
   route: RouteLocationNormalized;
 }
 
@@ -21,3 +28,5 @@ export interface ISendOptions {
   debug: boolean;
   metric: Metric;
 }
+
+export type SendToAnalytics = (options: ISendOptions) => void;

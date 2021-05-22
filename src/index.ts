@@ -1,82 +1,89 @@
 import { getCLS, getFCP, getFID, getLCP, getTTFB } from "web-vitals";
 
-import type { Metric } from "web-vitals";
+import { Provider } from "./types";
+import { logPrefix } from "./util";
 
 import type {
   IContext,
-  ISendOptions,
   IOptions,
   IWebVitalsOptions,
+  SendToAnalytics,
 } from "./types";
 
-const VITALS_URL = "https://vitals.vercel-analytics.com/v1/vitals";
-
-function sendMetric({ context, debug, metric }: ISendOptions) {
-  const speed: string =
-    "connection" in navigator &&
-    navigator["connection"] &&
-    "effectiveType" in navigator["connection"]
-      ? navigator["connection"]["effectiveType"]
-      : "";
-
-  const body = {
-    dsn: process.env.VERCEL_ANALYTICS_ID as string,
-    event_name: metric.name,
-    href: context.href,
-    id: metric.id,
-    page: context.fullPath,
-    speed,
-    value: metric.value.toString(),
-  };
-
-  if (debug) console.debug(`${metric.name}:`, JSON.stringify(body, null, 4));
-
-  // This content type is necessary for `sendBeacon`
-  const blob = new Blob([new URLSearchParams(body).toString()], {
-    type: "application/x-www-form-urlencoded",
-  });
-
-  navigator.sendBeacon
-    ? navigator.sendBeacon(VITALS_URL, blob)
-    : fetch(VITALS_URL, {
-        body: blob,
-        credentials: "omit",
-        keepalive: true,
-        method: "POST",
-      });
+/**
+ * Generate metric data & hand the generated data over to the `sendMetric` function to submit the data to the chosen provider
+ *
+ * @param {SendToAnalytics} sendMetric - Provider specific send function that will handle the data provided & send it to the chosen provider
+ * @param {IContext} context - Current route context to handle the full path / href
+ * @param {boolean} debug - Debug log metric data to the console
+ */
+function sendToProvider(
+  sendMetric: SendToAnalytics,
+  context: IContext,
+  debug: boolean
+): void {
+  try {
+    getFID((metric) => sendMetric({ context, debug, metric }));
+    getTTFB((metric) => sendMetric({ context, debug, metric }));
+    getLCP((metric) => sendMetric({ context, debug, metric }));
+    getCLS((metric) => sendMetric({ context, debug, metric }));
+    getFCP((metric) => sendMetric({ context, debug, metric }));
+  } catch (error) {
+    console.error(logPrefix, error);
+  }
 }
 
-function webVitals({ debug, route }: IWebVitalsOptions): void {
+/**
+ * Takes the the provided options & uses them to generate the metric data which is then sent to the chosen vitals provider
+ *
+ * @param {boolean} options.debug - Debug log metric data to the console
+ * @param {provider} options.provider - The chosen web vitals provider to send the metric data to
+ * @param {RouteLocationNormalized} options.route - The current / active route to generate & submit vitals data for
+ */
+async function webVitals({
+  debug,
+  provider,
+  route,
+}: IWebVitalsOptions): Promise<void> {
   const context: IContext = {
     fullPath: route.fullPath,
     href: location.href,
   };
 
-  try {
-    getFID((metric: Metric) => sendMetric({ context, metric, debug }));
-    getTTFB((metric: Metric) => sendMetric({ context, metric, debug }));
-    getLCP((metric: Metric) => sendMetric({ context, metric, debug }));
-    getCLS((metric: Metric) => sendMetric({ context, metric, debug }));
-    getFCP((metric: Metric) => sendMetric({ context, metric, debug }));
-  } catch (error) {
-    console.error("[Analytics]", error);
+  switch (provider) {
+    case Provider.VERCEL:
+      const { sendToAnalytics } = await import("./providers/vercel");
+      sendToProvider(sendToAnalytics, context, debug);
   }
 }
 
 /**
- * Track core web vitals in Vue.js projects
+ * Track core web vitals in a Vue.js project
  *
- * @param {IOptions} [options] - Plugin options
- * @param {boolean} [options.debug=NODE_ENV === "development" || false] - Whether to log metrics in the console
+ * @param {boolean} [options.debug=NODE_ENV === "development" || false] - Debug log metric data to the console
+ * @param {Provider} [options.provider=vercel] - The provider to submit your metric data to
  * @param {Router} options.router - Vue router instance
  */
 export function useVitals({
   debug = process.env.NODE_ENV === "development" || false,
+  provider = Provider.VERCEL,
   router,
 }: IOptions) {
   router.isReady().then(() => {
-    router.beforeResolve((route) => webVitals({ debug, route }));
-    router.afterEach((route) => webVitals({ debug, route }));
+    router.beforeResolve((route) =>
+      webVitals({
+        debug,
+        provider,
+        route,
+      })
+    );
+    router.afterEach((route) =>
+      webVitals({
+        debug,
+        provider,
+        route,
+      })
+    );
   });
 }
 
