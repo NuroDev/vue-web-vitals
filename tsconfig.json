@@ -13,6 +13,6 @@
     "strict": true,
     "target": "es2016"
   },
-  "include": ["*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
