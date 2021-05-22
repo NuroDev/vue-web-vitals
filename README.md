@@ -31,15 +31,9 @@ const router = createRouter({
   // ...
 });
 
-useVitals({
-  /// Log metrics in the console (Optional) [Default: `true` if running in development]
-  debug: false,
-
-  /// Analytics provider (Optional) [Default: 'vercel']
-  provider: "vercel",
-
-  /// Vue Router instance (Required)
-  router,
+router.beforeResolve((route, before, next) => {
+  useVitals({ route });
+  next();
 });
 ```
 
@@ -50,4 +44,5 @@ Currently this module only supports Vue 3.x and vue-router 4.x.
 ## ✨ Inspiration
 
 [nuxt-community/web-vitals-module](https://github.com/nuxt-community/web-vitals-module)
+
 [isabella232/nuxt-plugin-vercel](https://github.com/isabella232/nuxt-plugin-vercel)
