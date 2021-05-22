@@ -1,6 +1,6 @@
 {
   "name": "vue-web-vitals",
-  "version": "0.1.2-beta.3",
+  "version": "0.1.2",
   "description": "Track core web vitals in Vue.js projects",
   "repository": {
     "type": "git",
