@@ -25,10 +25,7 @@ const router = createRouter({
   // ...
 });
 
-router.beforeResolve((route, before, next) => {
-  useVitals({ route });
-  next();
-});
+useVitals({ router });
 ```
 
 ## ⚠️ Requirements
